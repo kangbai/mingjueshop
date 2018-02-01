@@ -1,0 +1,49 @@
+$SCALE: 10;
+$BASE: 375 / $SCALE;
+$size_small: 12;
+$size_middle: 14;
+$size_default: 16;
+$size_big: 18;
+$text_color: #666;
+$dark_text_color : #333;
+$light_text_color: #858585;
+$bg_color: #E7E7E7;
+$border_color: #dedede;
+$primary_color: #00CCB1;
+$purple_color: #7f59bb;
+$price_color: #b4282d;
+$link_color: #265efd;
+$placeholder_color: #A8A8A8;
+
+// 超过显示省略号
+@mixin ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@mixin lineThrough($width, $margin: 8) {
+  position: relative;
+  &::before {
+    left: - px2rem($width + $margin);
+  }
+  &::after {
+    right: - px2rem($width + $margin);
+  }
+  &::before, &::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 1px;
+    width: px2rem($width);
+    background-color: #d9d9d9;
+    // 更改一个元素的变形原点
+    transform-origin: 50% 100% 0;
+  }
+}
+
+@function px2rem ($px) {
+  @return ($px / $BASE) + rem
+}

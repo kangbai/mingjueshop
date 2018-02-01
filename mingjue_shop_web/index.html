@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>名爵商城</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <input hidden id="from-input"  value="<?php echo $from?>">
+    <input hidden id="platform-input" value="<?php echo $platform?>">
+    <!-- built files will be auto injected -->
+    <script>
+      
+        // start
+        //ios
+        function setupWebViewJavascriptBridge(callback) {
+            if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+            if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+            window.WVJBCallbacks = [callback];
+            var WVJBIframe = document.createElement('iframe');
+            WVJBIframe.style.display = 'none';
+            WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+            document.documentElement.appendChild(WVJBIframe);
+            setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
+        }
+        function connectWebViewJavascriptBridge(callback) {
+            if (window.WebViewJavascriptBridge) {
+                callback(WebViewJavascriptBridge)
+            } else {
+                document.addEventListener(
+                        'WebViewJavascriptBridgeReady'
+                        , function() {
+                            callback(WebViewJavascriptBridge)
+                        },
+                        false
+                );
+            }
+        }
+
+        // getUserToken token获取
+        //logout 退出
+        // showPhoto 头像
+        // openNewWebview  打开新的web
+
+        var u = navigator.userAgent;
+        window.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        window.isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        window.client = {};
+
+        window.client.init = function( callback ){
+            if(isAndroid){
+                connectWebViewJavascriptBridge(function (bridge) {
+                    bridge.init(function(message, responseCallback) {
+                        //console.log('JS got a message', message);
+                        // alert(22)
+                        var data = {
+                            'Javascript Responds': '测试中文!'
+                        };
+                        // console.log('JS responding with', data);
+                        responseCallback(data);
+                    });
+                    // generateClient(bridge);
+                    callback && callback(bridge);
+                });
+            }else if(isiOS){
+                setupWebViewJavascriptBridge(function (bridge) {
+                    // generateClient(bridge);
+                    callback && callback(bridge);
+                });
+            }
+        }
+
+        window.client.init(function(bridge){
+            window.AppExec = bridge;
+            console.log('=======init======');
+        });
+    </script>
+  </body>
+</html>
