@@ -2,7 +2,7 @@
   "name": "mingjue-shop",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "https://github.com/luoshi0429",
+  "author": "1024677832@qq.com",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
